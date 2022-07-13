@@ -13,7 +13,7 @@ import com.mirror.market_android.R;
 
 import java.util.List;
 
-public class CreateContentActivityAdapter extends RecyclerView.Adapter<CreateContentActivityAdapter.MyViewHolder> {
+public class CreateContentAdapter extends RecyclerView.Adapter<CreateContentAdapter.MyViewHolder> {
 
     private List<PhotoData> dataList;
     static public View.OnClickListener onClick;
@@ -40,7 +40,7 @@ public class CreateContentActivityAdapter extends RecyclerView.Adapter<CreateCon
         }
     }
 
-    public CreateContentActivityAdapter(List<PhotoData> list, View.OnClickListener listener) {
+    public CreateContentAdapter(List<PhotoData> list, View.OnClickListener listener) {
         dataList = list;
         onClick = listener;
     }

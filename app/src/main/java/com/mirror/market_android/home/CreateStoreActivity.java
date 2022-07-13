@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -34,7 +33,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.mirror.market_android.R;
 
-import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +53,7 @@ public class CreateStoreActivity extends AppCompatActivity {
     List<StoreData> list = new ArrayList<>();
 
     private RecyclerView createContentRecyclerView;
-    private CreateContentActivityAdapter adapter;
+    private CreateContentAdapter adapter;
     private LinearLayoutManager layoutManager;
 
     private List<PhotoData> photoDataList;
@@ -233,7 +231,7 @@ public class CreateStoreActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         createContentRecyclerView.setLayoutManager(layoutManager);
 
-        adapter = new CreateContentActivityAdapter(photoDataList, new View.OnClickListener() {
+        adapter = new CreateContentAdapter(photoDataList, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Object object = v.getTag();

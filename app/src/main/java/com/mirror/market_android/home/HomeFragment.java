@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -48,11 +49,12 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private HomeAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    public static List<HomeData> homeDataList = new ArrayList<>();
     public static List<StoreData> storeList = new ArrayList<>();
 
     private TextView location;
     private ImageView locationList;
+
+    private ProgressBar progress;
 
     @Nullable
     @Override
@@ -61,6 +63,8 @@ public class HomeFragment extends Fragment {
 
 
         //init();
+
+        progress = (ProgressBar) v.findViewById(R.id.progress);
 
         location = (TextView) v.findViewById(R.id.location);
         locationList = (ImageView) v.findViewById(R.id.locationList);
@@ -121,18 +125,8 @@ public class HomeFragment extends Fragment {
                     int position = (int)tag;
                     Intent intent = new Intent(getActivity(), StoreActivity.class);
                     intent.putExtra("position", String.valueOf(position));
-                    intent.putExtra("userName", "강현성");
-                    intent.putExtra("location", homeDataList.get(position).getLocation());
+                    intent.putExtra("key", storeList.get(position).getKey());
 
-
-
-                    intent.putExtra("time", homeDataList.get(position).getTime());
-                    intent.putExtra("title", homeDataList.get(position).getTitle());
-                    intent.putExtra("content", homeDataList.get(position).getContent());
-                    intent.putExtra("likeCount", "30");
-                    intent.putExtra("dislikeCount", "10");
-                    intent.putExtra("totalPrice", homeDataList.get(position).getTotalPrice());
-                    intent.putExtra("price", homeDataList.get(position).getPrice());
                     startActivity(intent);
 
                 }
@@ -147,58 +141,10 @@ public class HomeFragment extends Fragment {
         return v;
     }
 
-    public void init() {
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println(snapshot.toString());
-                StoreData store = snapshot.getValue(StoreData.class);
-                storeList.add(store);
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
     @Override
     public void onStart() {
         super.onStart();
-        homeDataList.clear();
-
-        Bitmap testImage = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.test);
-        HomeData homeData1 = new HomeData("교촌 허니콤보", "교촌 허니콤보 같이 드실 분!!!", "새빛관", "총 20,000", "1인당 10,000", "1분전", testImage);
-        HomeData homeData2 = new HomeData("생수 같이 사실 분!", "생수 같이 사요!", "한빛관", "총 20,000", "1인당 10,000", "3분전", null);
-        HomeData homeData3 = new HomeData("음료", "음료!@!@!", "혜민관", "총 20,000", "1인당 10,000", "1분전", null);
-        HomeData homeData4 = new HomeData("황금올리브유", "교촌 허니콤보 같이 드실 분!!!", "새빛관", "총 20,000", "1인당 10,000", "1분전", null);
-        HomeData homeData5 = new HomeData("test버전입니다.testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-                "test버전입니다.testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-                "test버전입니다.testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-                "test버전입니다.testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-                "test버전입니다.testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-                "test버전입니다.testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-                null);
-
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-        Calendar time = Calendar.getInstance();
-        String formatTime = format.format(time.getTime());
-
-        homeData1.setTime(String.valueOf(homeData1.getTime()));
-        homeData2.setTime(String.valueOf(homeData2.getTime()));
-        homeData3.setTime(String.valueOf(homeData3.getTime()));
-        homeData4.setTime(String.valueOf(homeData4.getTime()));
-        homeData5.setTime(String.valueOf(homeData5.getTime()));
-
-
-        homeDataList.add(homeData1);
-        homeDataList.add(homeData2);
-        homeDataList.add(homeData3);
-        homeDataList.add(homeData4);
-        homeDataList.add(homeData5);
-
+        progress.setVisibility(View.VISIBLE);
         storeList.clear();
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -210,9 +156,7 @@ public class HomeFragment extends Fragment {
                     storeList.add(store);
                 }
                 adapter.notifyDataSetChanged();
-//                Log.d(TAG, store.getId());
-//                Log.d(TAG, store.getContent());
-//                System.out.println("~~~~~~~~~~~");
+                progress.setVisibility(View.GONE);
             }
 
 
@@ -227,6 +171,7 @@ public class HomeFragment extends Fragment {
     }
 
 
+    /*
     ActivityResultLauncher<Intent> startActivityResult = registerForActivityResult( new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override public void onActivityResult(ActivityResult result) {
@@ -249,6 +194,6 @@ public class HomeFragment extends Fragment {
                     }
                 }
             });
-
+     */
 
 }
