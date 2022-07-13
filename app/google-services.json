@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "608529353327",
+    "project_id": "market-android-34a49",
+    "storage_bucket": "market-android-34a49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608529353327:android:e6188f8634d72e4115db9a",
+        "android_client_info": {
+          "package_name": "com.mirror.market_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608529353327-c039j2l5lrl2vdb4s8vovgfm5ret442o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBityv0jVC2-QfexD3FUBz_8z05tA1pqbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608529353327-c039j2l5lrl2vdb4s8vovgfm5ret442o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

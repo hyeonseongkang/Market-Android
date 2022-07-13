@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginTop="10dp">
+
+
+    <ImageView
+        android:id="@+id/photoImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/photoImage"
+        android:textColor="#000000"
+        android:fontFamily="@font/gmm"
+        android:textSize="17dp"
+        android:layout_marginLeft="5dp"
+        android:ellipsize="end"
+        android:maxLines="4"/>
+
+    <ImageView
+        android:id="@+id/deletePhoto"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/cancel" />
+
+</RelativeLayout>
