@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.mirror.market_android.MainActivity;
 import com.mirror.market_android.R;
 import com.mirror.market_android.chat.ChatActivity;
 import com.mirror.market_android.chat.ChatData;
@@ -55,8 +56,8 @@ public class StoreActivity extends AppCompatActivity {
     private TextView title, content, price;
     private String getTitle, getContent, getPrice;
 
-    private String myId = "user1";
-    private String userId = "rgt9697";
+    private String myId = MainActivity.myId;
+    private String userId;
 
     private RecyclerView recyclerView;
     private StoreImageAdapter adapter;

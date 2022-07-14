@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mirror.market_android.MainActivity;
 import com.mirror.market_android.R;
 
 import org.w3c.dom.Text;
@@ -38,7 +39,7 @@ public class ChatActivity extends AppCompatActivity {
 
     String key;
     String getTitle;
-    String myId = "user1";
+    String myId = MainActivity.myId;
 
     private AppCompatImageButton send;
     private EditText message;

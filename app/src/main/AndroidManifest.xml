@@ -9,11 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MarketAndroid">
-        <activity android:name=".chat.ChatActivity"></activity>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".chat.ChatActivity"/>
         <activity android:name=".home.CreateStoreActivity" />
         <activity android:name=".home.StoreActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

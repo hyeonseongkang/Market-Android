@@ -31,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.mirror.market_android.MainActivity;
 import com.mirror.market_android.R;
 
 import java.text.DecimalFormat;
@@ -70,7 +71,7 @@ public class CreateStoreActivity extends AppCompatActivity {
 
     private Uri photo;
 
-    String user = "rgt9697";
+    String user = MainActivity.myId;
 
     private String priceFormat, totalPriceFormat;
 
@@ -189,7 +190,6 @@ public class CreateStoreActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         photoUri.add(uri);
-                                        System.out.println("이것이다!!: " + uri);
                                         firstUri = uri;
                                         StoreData create = new StoreData(user, ti, priceString, co, photoKeys, key, firstUri.toString());
                                         myRef.child(key).setValue(create);
@@ -201,7 +201,6 @@ public class CreateStoreActivity extends AppCompatActivity {
                                 firstCheck = false;
                             }
 
-                            System.out.println("사진 저장 성공!!! " + taskSnapshot.getUploadSessionUri());
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

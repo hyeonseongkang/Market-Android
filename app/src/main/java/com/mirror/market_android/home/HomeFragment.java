@@ -84,11 +84,6 @@ public class HomeFragment extends Fragment {
         writeContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (user == null) {
-//                    // 팝업창 구현
-//                    Toast.makeText(getActivity(), "로그인이 필요한 기능입니다.", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
                 Intent intent = new Intent(getActivity(), CreateStoreActivity.class);
                 startActivity(intent);
             }

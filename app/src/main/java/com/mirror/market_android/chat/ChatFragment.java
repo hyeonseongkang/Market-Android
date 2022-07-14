@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mirror.market_android.MainActivity;
 import com.mirror.market_android.R;
 import com.mirror.market_android.home.HomeAdapter;
 import com.mirror.market_android.home.StoreActivity;
@@ -39,7 +40,7 @@ public class ChatFragment extends Fragment {
 
     List<ChatListData> chatListDataList = new ArrayList<>();
 
-    private String myId = "user1";
+    String myId = MainActivity.myId;
 
     @Nullable
     @Override
@@ -48,6 +49,9 @@ public class ChatFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_chat, container, false);
 
         init();
+
+        Log.d("ChatFragment1", myId+ " ") ;
+        Log.d("ChatFragment2", MainActivity.myId);
 
         chatFragmentRecyclerView = (RecyclerView) v.findViewById(R.id.chatFragmentRecyclerView);
         chatFragmentRecyclerView.setHasFixedSize(true);
@@ -148,10 +152,13 @@ public class ChatFragment extends Fragment {
                         // users ==> myId
                         if (snapshot2.getKey().equals("users")) {
                             Users users = snapshot2.getValue(Users.class);
-                            if (users.getUser1().equals(myId) || users.getUser2().equals(myId)) {
+                            System.out.println("!!!!!!!!!!!!!!!!!! " + myId);
+                            if (users.getUser1().equals(MainActivity.myId) || users.getUser2().equals(MainActivity.myId)) {
                                 key = snapshot1.getKey();
+                                System.out.println(users.getUser1());
+                                System.out.println(users.getUser2());
 
-                                if (users.getUser1().equals(myId)) {
+                                if (users.getUser1().equals(MainActivity.myId)) {
                                     user = users.getUser2();
                                 } else {
                                     user = users.getUser1();
@@ -161,7 +168,7 @@ public class ChatFragment extends Fragment {
                                     ChatData chatdata = snapshot3.getValue(ChatData.class);
 
                                     // 내가 보낸 메시지가 아닐 경우
-                                    if (!chatdata.getUser().equals("user1")) {
+                                    if (!chatdata.getUser().equals(MainActivity.myId)) {
                                         lastMessage = chatdata.getMessage();
                                     }
                                 }
@@ -174,6 +181,11 @@ public class ChatFragment extends Fragment {
                                 }
                             }
                             ChatListData chatListData = new ChatListData(key, user, lastMessage, uri, title);
+                            System.out.println(key);
+                            System.out.println(user);
+                            System.out.println(lastMessage);
+                            System.out.println(title);
+
                             chatListDataList.add(chatListData);
 
                         }
