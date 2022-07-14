@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/userName"
+            android:text="202011609"
+            android:textStyle="bold"
+            android:fontFamily="@font/gmn"
+            android:textSize="11dp"
+            android:textColor="#000000"
+            android:layout_marginLeft="5dp"/>
+
+        <LinearLayout
+            android:id="@+id/one"
+            android:layout_below="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:background="@drawable/degisn4">
+
+
+
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ㅎㅇ"
+                android:textColor="#ffffff"
+                android:fontFamily="@font/gmm"
+                android:padding="5dp"
+                android:textSize="16dp"
+                android:id="@+id/message"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="07:15"
+            android:fontFamily="@font/gmn"
+            android:textSize="8dp"
+            android:id="@+id/time"
+            android:layout_below="@+id/one"
+            android:layout_marginLeft="5dp"/>
+
+    </RelativeLayout>
+</RelativeLayout>

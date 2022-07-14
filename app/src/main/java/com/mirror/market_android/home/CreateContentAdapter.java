@@ -48,7 +48,7 @@ public class CreateContentAdapter extends RecyclerView.Adapter<CreateContentAdap
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
-        v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.create_adapter, parent, false);
+        v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_create, parent, false);
 
         MyViewHolder viewHolder = new MyViewHolder(v);
         return viewHolder;

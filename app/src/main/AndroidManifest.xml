@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MarketAndroid">
-        <activity android:name=".home.CreateStoreActivity"></activity>
+        <activity android:name=".chat.ChatActivity"></activity>
+        <activity android:name=".home.CreateStoreActivity" />
         <activity android:name=".home.StoreActivity" />
         <activity
             android:name=".MainActivity"
