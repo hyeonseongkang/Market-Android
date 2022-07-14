@@ -76,11 +76,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
         holder.title.setText(dataList.get(position).getTitle());
         holder.content.setText(dataList.get(position).getContent());
-        holder.price.setText(dataList.get(position).getPrice());
+        holder.price.setText(dataList.get(position).getPrice() + "원");
 
         System.out.println(dataList.get(position).getTitle());
         System.out.println(dataList.get(position).getContent());
-        System.out.println(dataList.get(position).getPrice());
+        System.out.println(dataList.get(position).getPrice() + "원");
         /*
 
                 // click 이벤트 동작할 위젯에 setTag걸기

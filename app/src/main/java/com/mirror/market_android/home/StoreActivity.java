@@ -53,7 +53,7 @@ public class StoreActivity extends AppCompatActivity {
     private ImageButton backButton;
     private Button chatButton;
 
-    private TextView title, content, price;
+    private TextView title, content, price, userName;
     private String getTitle, getContent, getPrice;
 
     private String myId = MainActivity.myId;
@@ -143,6 +143,7 @@ public class StoreActivity extends AppCompatActivity {
         title = (TextView) findViewById(R.id.title);
         content = (TextView) findViewById(R.id.content);
         price =  (TextView) findViewById(R.id.price);
+        userName = (TextView) findViewById(R.id.userName);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -177,7 +178,8 @@ public class StoreActivity extends AppCompatActivity {
 
                         title.setText(getTitle);
                         content.setText(getContent);
-                        price.setText(getPrice);
+                        price.setText(getPrice + "원");
+                        userName.setText(userId);
                     }
                 }
                 for (int i = 0; i < photoKeys.size(); i++) {

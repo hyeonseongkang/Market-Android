@@ -1,9 +1,14 @@
 package com.mirror.market_android.home;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +24,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +34,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mirror.market_android.MainActivity;
 import com.mirror.market_android.R;
+import com.mirror.market_android.chat.ChatData;
+import com.mirror.market_android.chat.Users;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,6 +52,10 @@ public class HomeFragment extends Fragment {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("store");
+    DatabaseReference myChatRef = database.getReference("chats");
+
+    NotificationManager manager;
+    NotificationCompat.Builder builder;
 
     private RelativeLayout writeContent;
 
@@ -130,8 +143,7 @@ public class HomeFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
-
-
+        messageNoti();
 
         return v;
     }
@@ -141,10 +153,29 @@ public class HomeFragment extends Fragment {
         super.onStart();
         progress.setVisibility(View.VISIBLE);
         storeList.clear();
+//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+//                    System.out.println(snapshot1.toString());
+//                    StoreData store = snapshot1.getValue(StoreData.class);
+//                    storeList.add(store);
+//                }
+//                adapter.notifyDataSetChanged();
+//                progress.setVisibility(View.GONE);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//
+//            }
+//        });
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println(snapshot.toString());
+                storeList.clear();
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     System.out.println(snapshot1.toString());
                     StoreData store = snapshot1.getValue(StoreData.class);
@@ -165,7 +196,85 @@ public class HomeFragment extends Fragment {
 
     }
 
+    public void messageNoti() {
 
+        myChatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                // 1번 key 전부 가져옴
+                for (DataSnapshot snapshot1: snapshot.getChildren()) {
+                    //Log.d("Snapshot1", snapshot1.toString());
+
+                    for (DataSnapshot snapshot2: snapshot1.getChildren()) {
+                        // snapshot2 key: chat, info, users   value :
+                        String key = "";
+                        String user = "";
+                        String lastMessage = "";
+                        String uri = "";
+                        String title = "";
+
+                        // users ==> myId
+                        if (snapshot2.getKey().equals("users")) {
+                            Users users = snapshot2.getValue(Users.class);
+                            if (users.getUser1().equals(MainActivity.myId) || users.getUser2().equals(MainActivity.myId)) {
+                                key = snapshot1.getKey();
+
+                                if (snapshot1.child("chat").getChildrenCount() > 0) {
+                                    System.out.println("알림기능활성화~!!!!!!!!!!!!!!!!!!!!!!!!1");
+                                    for (DataSnapshot snapshot3: snapshot1.child("chat").getChildren()) {
+                                        ChatData chatdata = snapshot3.getValue(ChatData.class);
+
+                                        if (!(chatdata.getUser().equals(MainActivity.myId))) {
+                                            showNoti(chatdata.getUser(), chatdata.getMessage());
+                                        }
+
+                                        break;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void showNoti(String title, String message){
+        try {
+            NotificationManager notificationManager=(NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationCompat.Builder builder= null;
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+                String channelID="channel_01";
+                String channelName="MyChannel01";
+
+                NotificationChannel channel= new NotificationChannel(channelID,channelName,NotificationManager.IMPORTANCE_DEFAULT);
+
+                notificationManager.createNotificationChannel(channel);
+
+                builder=new NotificationCompat.Builder(getActivity(), channelID);
+            }
+
+            builder.setSmallIcon(android.R.drawable.ic_menu_view);
+
+            builder.setContentTitle(title);
+            builder.setContentText(message);
+            Bitmap bm= BitmapFactory.decodeResource(getResources(),R.drawable.logo2);
+            builder.setLargeIcon(bm);
+
+            Notification notification=builder.build();
+            notificationManager.notify(1, notification);
+        } catch (Exception e) {
+
+        }
+
+    }
     /*
     ActivityResultLauncher<Intent> startActivityResult = registerForActivityResult( new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {

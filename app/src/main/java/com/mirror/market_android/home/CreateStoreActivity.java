@@ -195,7 +195,6 @@ public class CreateStoreActivity extends AppCompatActivity {
                                         myRef.child(key).setValue(create);
                                         progress.setVisibility(View.GONE);
                                         finish();
-                                        Toast.makeText(CreateStoreActivity.this, "글 작성 완료", Toast.LENGTH_LONG).show();
                                     }
                                 });
                                 firstCheck = false;

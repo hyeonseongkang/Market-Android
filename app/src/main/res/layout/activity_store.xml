@@ -9,12 +9,12 @@
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="350dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="300dp" />
+            android:layout_height="match_parent" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -60,12 +60,44 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/person"/>
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_toRightOf="@+id/image"
+                    android:layout_marginRight="10dp"
+                    android:text="test"
+                    android:fontFamily="@font/gmm"
+                    android:textColor="#000000"
+                    android:textSize="20dp"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#CFCECE"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"/>
+
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:fontFamily="@font/gmm"
                 android:text="제목"/>
 
@@ -77,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:textSize="20dp"
+                android:textSize="17dp"
                 android:fontFamily="@font/gmm"
                 android:text="상세내용"
                 android:layout_marginTop="15dp"/>
@@ -96,49 +128,43 @@
             android:layout_height="1dp"
             android:background="#CFCECE"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="25dp"
-            android:layout_marginBottom="25dp">
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp">
 
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:id="@+id/price"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:fontFamily="@font/gmm"
+                android:text="10,000원"/>
 
-                <LinearLayout
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:textColor="#000000"
-                        android:textSize="20dp"
-                        android:fontFamily="@font/gmm"
-                        android:text="가격: "
-                        />
-
-                    <TextView
-                        android:id="@+id/price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#000000"
-                        android:textSize="20dp"
-                        android:fontFamily="@font/gmm"
-                        android:text="10,000원"/>
-                </LinearLayout>
 
 
             <Button
                 android:id="@+id/chatButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="채팅하기"
+                android:background="@drawable/degisn6"
+                android:layout_alignParentRight="true"
+                android:textColor="#ffffff"
+                android:fontFamily="@font/gmm"
+                android:text="채팅으로 거래하기"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:layout_marginLeft="15dp"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
     </RelativeLayout>
