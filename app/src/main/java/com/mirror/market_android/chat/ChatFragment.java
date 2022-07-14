@@ -53,7 +53,6 @@ public class ChatFragment extends Fragment {
         chatFragmentRecyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         chatFragmentRecyclerView.setLayoutManager(layoutManager);
-
         chatListAdapter = new ChatListAdapter(chatListDataList, new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -130,22 +129,16 @@ public class ChatFragment extends Fragment {
 
          */
         chatListDataList.clear();
-        myRef.addValueEventListener(new ValueEventListener() {
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-
             public void onDataChange(DataSnapshot snapshot) {
-                // snapshot key: chats, value:
-                System.out.println(snapshot.toString());
-
                 // 1번 key 전부 가져옴
                 for (DataSnapshot snapshot1: snapshot.getChildren()) {
-                    Log.d("Snapshot1", snapshot1.toString());
+                    //Log.d("Snapshot1", snapshot1.toString());
 
                     for (DataSnapshot snapshot2: snapshot1.getChildren()) {
-                        System.out.println(snapshot2.toString());
-                        System.out.println(snapshot2.getKey());
                         // snapshot2 key: chat, info, users   value :
-
                         String key = "";
                         String user = "";
                         String lastMessage = "";
@@ -156,7 +149,6 @@ public class ChatFragment extends Fragment {
                         if (snapshot2.getKey().equals("users")) {
                             Users users = snapshot2.getValue(Users.class);
                             if (users.getUser1().equals(myId) || users.getUser2().equals(myId)) {
-                                System.out.println("!!!! " + snapshot1.getKey());
                                 key = snapshot1.getKey();
 
                                 if (users.getUser1().equals(myId)) {
@@ -170,9 +162,70 @@ public class ChatFragment extends Fragment {
 
                                     // 내가 보낸 메시지가 아닐 경우
                                     if (!chatdata.getUser().equals("user1")) {
-                                        System.out.println(chatdata.getUser());
-                                        System.out.println(chatdata.getMessage());
-                                        System.out.println(chatdata.getTime());
+                                        lastMessage = chatdata.getMessage();
+                                    }
+                                }
+
+                                for (DataSnapshot snapshot4: snapshot1.child("info").getChildren()) {
+                                    StoreData storeData1 = snapshot4.getValue(StoreData.class);
+                                    title = storeData1.getTitle();
+                                    uri  = storeData1.getFirstUri();
+                                    break;
+                                }
+                            }
+                            ChatListData chatListData = new ChatListData(key, user, lastMessage, uri, title);
+                            chatListDataList.add(chatListData);
+
+                        }
+                    }
+                }
+                chatListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+        /*
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+
+            public void onDataChange(DataSnapshot snapshot) {
+                // snapshot key: chats, value:
+                //System.out.println(snapshot.toString());
+
+                // 1번 key 전부 가져옴
+                for (DataSnapshot snapshot1: snapshot.getChildren()) {
+                    //Log.d("Snapshot1", snapshot1.toString());
+
+                    for (DataSnapshot snapshot2: snapshot1.getChildren()) {
+                        // snapshot2 key: chat, info, users   value :
+
+                        String key = "";
+                        String user = "";
+                        String lastMessage = "";
+                        String uri = "";
+                        String title = "";
+
+                        // users ==> myId
+                        if (snapshot2.getKey().equals("users")) {
+                            Users users = snapshot2.getValue(Users.class);
+                            if (users.getUser1().equals(myId) || users.getUser2().equals(myId)) {
+                                key = snapshot1.getKey();
+
+                                if (users.getUser1().equals(myId)) {
+                                    user = users.getUser2();
+                                } else {
+                                    user = users.getUser1();
+                                }
+
+                                for (DataSnapshot snapshot3: snapshot1.child("chat").getChildren()) {
+                                    ChatData chatdata = snapshot3.getValue(ChatData.class);
+
+                                    // 내가 보낸 메시지가 아닐 경우
+                                    if (!chatdata.getUser().equals("user1")) {
                                         lastMessage = chatdata.getMessage();
                                     }
                                 }
@@ -187,10 +240,11 @@ public class ChatFragment extends Fragment {
 
                             ChatListData chatListData = new ChatListData(key, user, lastMessage, uri, title);
                             chatListDataList.add(chatListData);
-                            chatListAdapter.notifyDataSetChanged();
+
                         }
                     }
                 }
+                chatListAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -198,7 +252,7 @@ public class ChatFragment extends Fragment {
 
             }
         });
-
+*/
 
     }
 

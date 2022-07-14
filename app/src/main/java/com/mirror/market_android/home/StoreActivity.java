@@ -56,7 +56,7 @@ public class StoreActivity extends AppCompatActivity {
     private String getTitle, getContent, getPrice;
 
     private String myId = "user1";
-    private String userId = "user2";
+    private String userId = "rgt9697";
 
     private RecyclerView recyclerView;
     private StoreImageAdapter adapter;
@@ -65,6 +65,8 @@ public class StoreActivity extends AppCompatActivity {
     int position;
     String key;
     StoreData storeData;
+    String putKey;
+    boolean already = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,17 +83,47 @@ public class StoreActivity extends AppCompatActivity {
         chatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        // 1번 key 전부 가져옴
+                        for (DataSnapshot snapshot1: snapshot.getChildren()) {
+                            //Log.d("Snapshot1", snapshot1.toString());
+
+                            for (DataSnapshot snapshot2: snapshot1.getChildren()) {
+                                // snapshot2 key: chat, info, users   value :
+
+                                // users ==> myId
+                                if (snapshot2.getKey().equals("users")) {
+                                    Users users = snapshot2.getValue(Users.class);
+                                    System.out.println(users.getUser1() + " " + users.getUser2() + " " + myId + " " + userId);
+                                    if (users.getUser1().equals(myId) && users.getUser2().equals(userId)
+                                    ||
+                                    users.getUser1().equals(userId) && users.getUser2().equals(myId)) {
+                                        putKey = snapshot1.getKey();
+                                        Intent intent = new Intent(StoreActivity.this, ChatActivity.class);
+                                        intent.putExtra("key", putKey);
+                                        intent.putExtra("title", getTitle);
+                                        startActivity(intent);
+                                        return;
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+
+                    }
+                });
+
+
                 String chatKey = chatRef.push().getKey();
-//                chatRef.child(chatKey).child("chat").push().setValue(new ChatData(myId, "my1", "1111"));
-//                chatRef.child(chatKey).child("chat").push().setValue(new ChatData(userId, "user1", "3333"));
-//                chatRef.child(chatKey).child("chat").push().setValue(new ChatData(myId, "my2", "2222"));
-//                chatRef.child(chatKey).child("chat").push().setValue(new ChatData(userId, "user2", "3333"));
-//                chatRef.child(chatKey).child("chat").push().setValue(new ChatData(myId, "my3", "2222"));
-//                chatRef.child(chatKey).child("chat").push().setValue(new ChatData(myId, "my4", "2222"));
-//                chatRef.child(chatKey).child("chat").push().setValue(new ChatData(userId, "user3", "3333"));
                 chatRef.child(chatKey).child("info").child(key).setValue(storeData);
                 chatRef.child(chatKey).child("users").setValue(new Users(myId, userId));
-
                 Intent intent = new Intent(StoreActivity.this, ChatActivity.class);
                 intent.putExtra("key", chatKey);
                 intent.putExtra("title", getTitle);
